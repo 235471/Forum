@@ -9,11 +9,11 @@ let sut: CreateQuestionUseCase
 
 describe('Create Question', () => {
   beforeEach(() => {
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
     inMemoryQuestionRepository = new InMemoryQuestionRepository(
       inMemoryQuestionAttachmentsRepository,
     )
-    inMemoryQuestionAttachmentsRepository =
-      new InMemoryQuestionAttachmentsRepository()
     sut = new CreateQuestionUseCase(inMemoryQuestionRepository)
   })
 
@@ -36,5 +36,27 @@ describe('Create Question', () => {
       expect.objectContaining({ attachmentId: new UniqueEntityId('1') }),
       expect.objectContaining({ attachmentId: new UniqueEntityId('2') }),
     ])
+  })
+
+  it('It should be able to persist attachments while creating a question', async () => {
+    const result = await sut.execute({
+      authorId: '1',
+      title: 'Nova Pergunta',
+      content: 'Conteudo da pergunta',
+      attachmentsIds: ['1', '2'],
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryQuestionAttachmentsRepository.items).toHaveLength(2)
+    expect(inMemoryQuestionAttachmentsRepository.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          attachmentId: new UniqueEntityId('1'),
+        }),
+        expect.objectContaining({
+          attachmentId: new UniqueEntityId('2'),
+        }),
+      ]),
+    )
   })
 })
