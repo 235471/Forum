@@ -1,5 +1,6 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Answer } from '../../enterprise/entities/answer'
+import { AnswerWithAuthor } from '../../enterprise/entities/value-objects/answer-with-author'
 
 export abstract class AnswerRepository {
   abstract create(answer: Answer): Promise<void>
@@ -9,6 +10,11 @@ export abstract class AnswerRepository {
     questionId: string,
     params: PaginationParams,
   ): Promise<Answer[]>
+
+  abstract findManyByQuestionIdWithAuthor(
+    questionId: string,
+    params: PaginationParams,
+  ): Promise<AnswerWithAuthor[]>
 
   abstract delete(answer: Answer): Promise<void>
 }

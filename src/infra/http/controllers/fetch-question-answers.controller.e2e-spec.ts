@@ -32,7 +32,9 @@ describe('Fetch Question Answers (E2E)', () => {
   })
 
   test('[GET] /questions/:questionId/answers', async () => {
-    const user = await studentFactory.makePrismaStudent()
+    const user = await studentFactory.makePrismaStudent({
+      name: 'John Doe',
+    })
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
@@ -64,8 +66,16 @@ describe('Fetch Question Answers (E2E)', () => {
     expect(response.body.answers).toHaveLength(2)
     expect(response.body).toEqual({
       answers: expect.arrayContaining([
-        expect.objectContaining({ content: 'Answer 1' }),
-        expect.objectContaining({ content: 'Answer 2' }),
+        expect.objectContaining({
+          content: 'Answer 1',
+          authorId: user.id.toString(),
+          authorName: 'John Doe',
+        }),
+        expect.objectContaining({
+          content: 'Answer 2',
+          authorId: user.id.toString(),
+          authorName: 'John Doe',
+        }),
       ]),
     })
   })

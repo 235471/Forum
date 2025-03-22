@@ -8,11 +8,11 @@ import {
 } from '@nestjs/common'
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { FetchQuestionAnswersUseCase } from '@/domain/forum/application/use-cases/fetch-question-answers'
-import { AnswerPresenter } from '../presenters/answer-presenter'
 import {
   PageQueryParamSchema,
   queryValidationPipe,
 } from '../pipes/page-validation.pipe'
+import { AnswerWithAuthorPresenter } from '../presenters/answer-with-author-presenter'
 
 @Controller('/questions/:questionId/answers')
 @UseGuards(JwtAuthGuard)
@@ -33,7 +33,8 @@ export class FetchQuestionAnswersController {
       throw new BadRequestException()
     }
 
-    const answers = result.value?.answers.map(AnswerPresenter.toHTTP) ?? []
+    const answers =
+      result.value?.answers.map(AnswerWithAuthorPresenter.toHTTP) ?? []
 
     return { answers }
   }

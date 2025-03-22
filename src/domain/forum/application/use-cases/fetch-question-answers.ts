@@ -1,7 +1,7 @@
 import { Either, right } from '@/core/either'
 import { AnswerRepository } from '../repositories//answers-repository'
-import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { Injectable } from '@nestjs/common'
+import { AnswerWithAuthor } from '../../enterprise/entities/value-objects/answer-with-author'
 
 interface FetchQuestionAnswersUseCaseRequest {
   questionId: string
@@ -11,7 +11,7 @@ interface FetchQuestionAnswersUseCaseRequest {
 type FetchQuestionAnswersUseCaseResponse = Either<
   null,
   {
-    answers: Answer[]
+    answers: AnswerWithAuthor[]
   }
 >
 
@@ -23,7 +23,7 @@ export class FetchQuestionAnswersUseCase {
     questionId,
     page,
   }: FetchQuestionAnswersUseCaseRequest): Promise<FetchQuestionAnswersUseCaseResponse> {
-    const answers = await this.answerRepository.findManyByQuestionId(
+    const answers = await this.answerRepository.findManyByQuestionIdWithAuthor(
       questionId,
       { page },
     )
