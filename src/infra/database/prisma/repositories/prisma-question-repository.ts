@@ -10,7 +10,7 @@ import { PrismaQuesitonMapper } from '../mappers/prisma-question-mapper'
 export class PrismaQuestionRepository implements QuestionRepository {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly questionAttachment: QuestionAttachmentsRepository,
+    private readonly questionAttachmentRepository: QuestionAttachmentsRepository,
   ) {}
 
   async create(question: Question): Promise<void> {
@@ -20,7 +20,9 @@ export class PrismaQuestionRepository implements QuestionRepository {
       data,
     })
 
-    await this.questionAttachment.createMany(question.attachments.getItems())
+    await this.questionAttachmentRepository.createMany(
+      question.attachments.getItems(),
+    )
   }
 
   async save(question: Question): Promise<void> {
@@ -34,9 +36,11 @@ export class PrismaQuestionRepository implements QuestionRepository {
         data,
       }),
 
-      this.questionAttachment.createMany(question.attachments.getNewItems()),
+      this.questionAttachmentRepository.createMany(
+        question.attachments.getNewItems(),
+      ),
 
-      this.questionAttachment.deleteMany(
+      this.questionAttachmentRepository.deleteMany(
         question.attachments.getRemovedItems(),
       ),
     ])
