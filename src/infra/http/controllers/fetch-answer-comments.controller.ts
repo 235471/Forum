@@ -1,11 +1,11 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { FetchAnswerCommentsUseCase } from '@/domain/forum/application/use-cases/fetch-answer-comments'
-import { CommentPresenter } from '../presenters/comment-presenter'
 import {
   PageQueryParamSchema,
   queryValidationPipe,
 } from '../pipes/page-validation.pipe'
+import { CommentWithAuthorPresenter } from '../presenters/comment-with-author-presenter'
 
 @Controller('/answers/:answerId/comments')
 @UseGuards(JwtAuthGuard)
@@ -22,7 +22,9 @@ export class FetchAnswerCommentsController {
       page,
     })
 
-    const comments = result.value?.answerComments.map(CommentPresenter.toHTTP)
+    const comments = result.value?.comments.map(
+      CommentWithAuthorPresenter.toHTTP,
+    )
 
     return { comments }
   }
