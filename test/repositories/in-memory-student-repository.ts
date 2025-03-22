@@ -10,12 +10,6 @@ export class InMemoryStudentRepository implements StudentRepository {
     DomainEvents.dispatchEventsForAggregate(student.id)
   }
 
-  async findById(id: string): Promise<Student | null> {
-    const student = this.items.find((item) => item.id.toString() === id)
-
-    return student || null
-  }
-
   async findByEmail(email: string): Promise<Student | null> {
     const student = this.items.find((item) => item.email === email)
 
