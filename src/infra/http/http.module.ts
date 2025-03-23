@@ -83,7 +83,7 @@ import { StorageModule } from '../storage/storage.module'
     DeleteAnswerCommentUseCase,
     FetchQuestionCommentsUseCase,
     FetchAnswerCommentsUseCase,
-    UploadAndCreateAttachmentUseCase
+    UploadAndCreateAttachmentUseCase,
   ],
 })
 export class HttpModule {}
