@@ -20,6 +20,10 @@ This project demonstrates advanced software architecture concepts, focusing on D
 - **Domain Events with Pub/Sub patterns**
 - **Subdomain organization**
 - **In-memory repositories for testing**
+- **SOLID principles implementation:**
+  - Single Responsibility Principle (SRP)
+  - Interface Segregation Principle (ISP)
+  - Dependency Inversion Principle (DIP)
 - **JWT authentication and authorization**
 - **Data validation with Zod**
 - **RESTful API design**
