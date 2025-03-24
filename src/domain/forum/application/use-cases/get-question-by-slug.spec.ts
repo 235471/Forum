@@ -7,6 +7,7 @@ import { InMemoryStudentRepository } from 'test/repositories/in-memory-student-r
 import { makeStudent } from 'test/factories/make-student'
 import { makeAttachment } from 'test/factories/make-attachment'
 import { makeQuestionAttachment } from 'test/factories/make-question-attachments'
+import { Slug } from '../../enterprise/entities/value-objects/slug'
 
 let inMemoryQuestionRepository: InMemoryQuestionRepository
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
@@ -41,6 +42,7 @@ describe('Get Question By Slug', () => {
 
     const newQuestion = makeQuestion({
       authorId: student.id,
+      slug: Slug.create('trying-slug-out'),
     })
 
     await inMemoryQuestionRepository.create(newQuestion)
