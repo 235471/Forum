@@ -12,6 +12,7 @@ This project demonstrates advanced software architecture concepts, focusing on D
 - **JWT Authentication using RS256 with public/private keys**
 - **Prisma ORM for database access**
 - **AWS S3 integration for file storage**
+- **OpenAPI documentation available at `/api` endpoint**
 
 ## Concepts Covered
 
@@ -154,7 +155,4 @@ npm run test:watch
 
 # Run e2e tests
 npm run test:e2e
-
-# Run specific e2e test adjust the file path
-npm run test:e2e:single
 ```
